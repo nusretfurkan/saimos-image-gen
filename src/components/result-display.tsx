@@ -124,7 +124,7 @@ export function ResultDisplay({
 
       {/* --- State 2: Has image (hero element -- minimal chrome, image IS the design) --- */}
       {hasAnyImage && (
-        <div className="relative overflow-hidden rounded-xl bg-cream-100 shadow-card transition-shadow duration-200 ease-soft hover:shadow-elevated">
+        <div className="relative overflow-hidden rounded-xl bg-cream-100 shadow-card animate-fade-in transition-shadow duration-200 ease-soft hover:shadow-elevated">
           {/* Previous image for crossfade during regeneration */}
           {previousImageRef.current &&
             previousImageRef.current !== imageUrl && (
