@@ -10,7 +10,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Image Generation
 
 - [ ] **GEN-01**: User can enter a text prompt and generate an image (text-to-image)
-- [ ] **GEN-02**: User can upload a reference image (JPEG/PNG/WebP, ≤7MB) and enter a text prompt to generate an edited/transformed image (image-to-image)
+- [x] **GEN-02**: User can upload a reference image (JPEG/PNG/WebP, ≤7MB) and enter a text prompt to generate an edited/transformed image (image-to-image)
 - [ ] **GEN-03**: User can toggle thinking level (low/high) to trade speed for quality
 
 ### Filters
@@ -22,9 +22,9 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Image Output
 
 - [ ] **OUT-01**: Generated image displays prominently as the hero element
-- [ ] **OUT-02**: User can view generated image in fullscreen (dark overlay, contain-fit, close via X/backdrop/Escape)
-- [ ] **OUT-03**: User can download generated image as `saimos-gen-{timestamp}.png`
-- [ ] **OUT-04**: User can copy generated image to clipboard
+- [x] **OUT-02**: User can view generated image in fullscreen (dark overlay, contain-fit, close via X/backdrop/Escape)
+- [x] **OUT-03**: User can download generated image as `saimos-gen-{timestamp}.png`
+- [x] **OUT-04**: User can copy generated image to clipboard
 - [ ] **OUT-05**: User can paste image from clipboard into the upload area (image-to-image mode)
 
 ### Infrastructure
@@ -41,7 +41,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **UX-02**: Mobile layout is usable and well-proportioned on common phone screen sizes
 - [ ] **UX-03**: Desktop layout uses two-column arrangement (controls left, output right)
 - [ ] **UX-04**: Only the last generated image is held — no persistence across page refreshes
-- [ ] **UX-05**: Uploaded images validated for format (JPEG/PNG/WebP) and size (≤7MB) with client-side feedback
+- [x] **UX-05**: Uploaded images validated for format (JPEG/PNG/WebP) and size (≤7MB) with client-side feedback
 - [ ] **UX-06**: 4K resolution option shows timeout warning for free tier
 - [ ] **UX-07**: Error states handled with inline messages and retry option
 
@@ -98,15 +98,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | GEN-01 | Phase 2 | Pending |
-| GEN-02 | Phase 3 | Pending |
+| GEN-02 | Phase 3 | Complete |
 | GEN-03 | Phase 5 | Pending |
 | FILT-01 | Phase 2 | Pending |
 | FILT-02 | Phase 2 | Pending |
 | FILT-03 | Phase 2 | Pending |
 | OUT-01 | Phase 2 | Pending |
-| OUT-02 | Phase 5 | Pending |
-| OUT-03 | Phase 5 | Pending |
-| OUT-04 | Phase 5 | Pending |
+| OUT-02 | Phase 5 | Complete |
+| OUT-03 | Phase 5 | Complete |
+| OUT-04 | Phase 5 | Complete |
 | OUT-05 | Phase 3 | Pending |
 | INFRA-01 | Phase 1 | Pending |
 | INFRA-02 | Phase 1 | Pending |
@@ -117,7 +117,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UX-02 | Phase 4 | Pending |
 | UX-03 | Phase 4 | Pending |
 | UX-04 | Phase 2 | Pending |
-| UX-05 | Phase 3 | Pending |
+| UX-05 | Phase 3 | Complete |
 | UX-06 | Phase 2 | Pending |
 | UX-07 | Phase 2 | Pending |
 | VIS-01 | Phase 4 | Complete |

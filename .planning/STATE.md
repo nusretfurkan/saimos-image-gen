@@ -34,6 +34,8 @@ Progress: [#.........] 8%
 - Trend: --
 
 *Updated after each plan completion*
+| Phase 05 P01 | 4min | 2 tasks | 5 files |
+| Phase 03 P01 | 6min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -47,6 +49,12 @@ Recent decisions affecting current work:
 - [04-01]: Used OKLCH color space exclusively for design tokens -- Tailwind v4 standard, perceptually uniform.
 - [04-01]: Sage green hue fixed at 145 with 10 lightness levels (0.97 to 0.28) and chroma range 0.02-0.10.
 - [04-01]: Font variables use @theme inline to handle next/font runtime injection (required for build-time compatibility).
+- [Phase 05]: Used native HTML dialog element for fullscreen viewer (built-in Escape, focus trap, backdrop)
+- [Phase 05]: Used fetch-to-blob for off-main-thread image download conversion
+- [Phase 05]: Copy button hidden when Clipboard API unavailable (not disabled)
+- [03-01]: Used native browser APIs only (no react-dropzone) per research recommendation
+- [03-01]: Counter-based drag flicker prevention pattern established for upload component
+- [03-01]: Controlled upload component pattern: parent owns ImageUploadState
 
 ### Pending Todos
 
@@ -60,5 +68,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-18
-Stopped at: Completed 04-01-PLAN.md
-Resume file: .planning/phases/04-visual-identity-responsive-layout/04-01-SUMMARY.md
+Stopped at: Completed 05-01-PLAN.md
+Resume file: .planning/phases/05-output-actions-power-features/05-01-SUMMARY.md
