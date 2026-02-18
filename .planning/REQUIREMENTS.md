@@ -47,8 +47,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Visual Identity
 
-- [ ] **VIS-01**: Soft/pastel aesthetic with sage green accent and cream backgrounds
-- [ ] **VIS-02**: Playfair Display (headings) + DM Sans (body) typography
+- [x] **VIS-01**: Soft/pastel aesthetic with sage green accent and cream backgrounds
+- [x] **VIS-02**: Playfair Display (headings) + DM Sans (body) typography
 - [ ] **VIS-03**: Distinctive, non-generic design (per frontend-design skill guidelines)
 
 ## v2 Requirements
@@ -120,8 +120,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UX-05 | Phase 3 | Pending |
 | UX-06 | Phase 2 | Pending |
 | UX-07 | Phase 2 | Pending |
-| VIS-01 | Phase 4 | Pending |
-| VIS-02 | Phase 4 | Pending |
+| VIS-01 | Phase 4 | Complete |
+| VIS-02 | Phase 4 | Complete |
 | VIS-03 | Phase 4 | Pending |
 
 **Coverage:**
