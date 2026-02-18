@@ -57,5 +57,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-18
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-foundation-api-route/01-CONTEXT.md
+Stopped at: Phase 2 context gathered
+Resume file: .planning/phases/02-text-to-image-generation/02-CONTEXT.md
