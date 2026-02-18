@@ -35,10 +35,10 @@ export function FilterControls({
                 key={ratio.value}
                 type="button"
                 onClick={() => onAspectRatioChange(ratio.value)}
-                className={`flex flex-shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs transition-colors ${
+                className={`flex flex-shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs min-h-[44px] transition-colors motion-reduce:transition-none ${
                   isSelected
-                    ? "border-green-600 bg-green-50 text-green-800"
-                    : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                    ? "border-sage-500 bg-sage-100 text-sage-800"
+                    : "border-sage-200/50 bg-cream-100 text-ink-700 hover:bg-cream-200"
                 }`}
               >
                 <span
@@ -68,10 +68,10 @@ export function FilterControls({
                 key={res.value}
                 type="button"
                 onClick={() => onResolutionChange(res.value)}
-                className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
+                className={`rounded-full border px-3 py-1.5 text-xs min-h-[44px] transition-colors motion-reduce:transition-none ${
                   isSelected
-                    ? "border-green-600 bg-green-50 text-green-800"
-                    : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                    ? "border-sage-500 bg-sage-100 text-sage-800"
+                    : "border-sage-200/50 bg-cream-100 text-ink-700 hover:bg-cream-200"
                 }`}
               >
                 {res.label}
@@ -79,7 +79,7 @@ export function FilterControls({
             );
           })}
         </div>
-        <p className="mt-1.5 text-xs text-gray-400">
+        <p className="mt-1.5 text-xs text-ink-500">
           {cost} per image
           {is4K && (
             <span className="ml-2 text-amber-500">
