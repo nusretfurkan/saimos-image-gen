@@ -60,29 +60,44 @@ export default function Home() {
   }, [prompt, aspectRatio, resolution, imageUrl]);
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-8 flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">Saimos Image Gen</h1>
+    <main className="min-h-screen bg-cream-50">
+      <div className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-10">
+        <header className="mb-8 md:mb-12">
+          <h1 className="font-heading text-2xl font-semibold tracking-tight text-ink-900 md:text-3xl">
+            Saimos&apos; Image Gen
+          </h1>
+          <p className="mt-1 text-sm text-ink-500">
+            Generate and transform images with AI
+          </p>
+        </header>
 
-      <PromptInput
-        value={prompt}
-        onChange={setPrompt}
-        onSubmit={handleGenerate}
-        isLoading={isLoading}
-      />
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(320px,2fr)_3fr] md:gap-12 lg:gap-16">
+          <aside className="space-y-6 md:max-w-lg">
+            <PromptInput
+              value={prompt}
+              onChange={setPrompt}
+              onSubmit={handleGenerate}
+              isLoading={isLoading}
+            />
 
-      <FilterControls
-        aspectRatio={aspectRatio}
-        onAspectRatioChange={setAspectRatio}
-        resolution={resolution}
-        onResolutionChange={setResolution}
-      />
+            <FilterControls
+              aspectRatio={aspectRatio}
+              onAspectRatioChange={setAspectRatio}
+              resolution={resolution}
+              onResolutionChange={setResolution}
+            />
+          </aside>
 
-      <ResultDisplay
-        imageUrl={imageUrl}
-        isLoading={isLoading}
-        error={error}
-        onRetry={handleGenerate}
-      />
+          <section className="md:sticky md:top-8 md:self-start">
+            <ResultDisplay
+              imageUrl={imageUrl}
+              isLoading={isLoading}
+              error={error}
+              onRetry={handleGenerate}
+            />
+          </section>
+        </div>
+      </div>
     </main>
   );
 }
