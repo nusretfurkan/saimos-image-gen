@@ -62,11 +62,11 @@ Plans:
   1. User can upload a reference image via file picker or drag-and-drop, see a thumbnail preview, and generate an edited version with a text prompt
   2. User can paste an image from clipboard into the upload area and use it as the reference image
   3. Uploading an invalid file (wrong format or >7MB) shows a specific client-side error message before any server request
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: Image upload component (file picker, drag-and-drop, validation)
-- [ ] 03-02: Image-to-image generation flow with clipboard paste support
+- [ ] 03-01-PLAN.md -- Image upload component with validation, resize utility, file picker, and drag-and-drop
+- [ ] 03-02-PLAN.md -- Image-to-image generation flow with clipboard paste and before/after result display
 
 ### Phase 4: Visual Identity + Responsive Layout
 **Goal**: The app has a distinctive, non-generic visual identity and works well on both mobile phones and desktop browsers
