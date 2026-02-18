@@ -1,12 +1,18 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { PromptInput } from "@/components/prompt-input";
 import { FilterControls } from "@/components/filter-controls";
 import { ThinkingToggle } from "@/components/thinking-toggle";
+import { ImageUpload } from "@/components/image-upload";
 import { ResultDisplay } from "@/components/result-display";
+import {
+  validateImageFile,
+  resizeImageIfNeeded,
+  readFileAsDataUrl,
+} from "@/lib/image-utils";
 import type { AspectRatio, Resolution } from "@/lib/constants";
-import type { ThinkingLevel } from "@/lib/types";
+import type { ThinkingLevel, ImageUploadState } from "@/lib/types";
 
 export default function Home() {
   const [prompt, setPrompt] = useState("");
@@ -18,6 +24,65 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
+  // Image upload state
+  const [uploadedImage, setUploadedImage] = useState<ImageUploadState | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  // Original image for before/after display
+  const [originalImage, setOriginalImage] = useState<string | null>(null);
+
+  // Contextual mode detection (derived, not stored)
+  const isImageToImage = uploadedImage !== null;
+
+  // --- Clipboard paste handler (page-level) ---
+
+  const processImageFile = useCallback(async (file: File) => {
+    const validationError = validateImageFile(file);
+    if (validationError) {
+      setUploadError(validationError.message);
+      return;
+    }
+
+    try {
+      const resizedFile = await resizeImageIfNeeded(file);
+      const dataUrl = await readFileAsDataUrl(resizedFile);
+
+      setUploadedImage({
+        dataUrl,
+        fileName: file.name,
+        fileSize: file.size,
+        mimeType: resizedFile.type,
+      });
+      setUploadError(null);
+    } catch {
+      setUploadError("Failed to process image. Please try again.");
+    }
+  }, []);
+
+  useEffect(() => {
+    const handlePaste = (e: ClipboardEvent) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+
+      for (const item of Array.from(items)) {
+        if (item.type.startsWith("image/")) {
+          e.preventDefault();
+          const file = item.getAsFile();
+          if (file) {
+            processImageFile(file);
+          }
+          return;
+        }
+      }
+      // If no image found, let the event propagate (user pasting text into prompt)
+    };
+
+    document.addEventListener("paste", handlePaste);
+    return () => document.removeEventListener("paste", handlePaste);
+  }, [processImageFile]);
+
+  // --- Generation handler ---
+
   const handleGenerate = useCallback(async () => {
     // Abort any in-flight request
     abortControllerRef.current?.abort();
@@ -27,17 +92,31 @@ export default function Home() {
     setIsLoading(true);
     setError(null);
 
+    // Store original image for before/after display
+    if (isImageToImage && uploadedImage) {
+      setOriginalImage(uploadedImage.dataUrl);
+    } else {
+      setOriginalImage(null);
+    }
+
     try {
+      const body: Record<string, unknown> = {
+        prompt,
+        aspectRatio,
+        resolution,
+        thinkingLevel,
+        mode: isImageToImage ? "image-to-image" : "text-to-image",
+      };
+
+      if (uploadedImage) {
+        body.image = uploadedImage.dataUrl;
+        body.imageMimeType = uploadedImage.mimeType;
+      }
+
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prompt,
-          aspectRatio,
-          resolution,
-          thinkingLevel,
-          mode: "text-to-image",
-        }),
+        body: JSON.stringify(body),
         signal: controller.signal,
       });
 
@@ -58,10 +137,11 @@ export default function Home() {
       setError(
         err instanceof Error ? err.message : "Something went wrong."
       );
+      setOriginalImage(null);
     } finally {
       setIsLoading(false);
     }
-  }, [prompt, aspectRatio, resolution, thinkingLevel, imageUrl]);
+  }, [prompt, aspectRatio, resolution, thinkingLevel, imageUrl, isImageToImage, uploadedImage]);
 
   return (
     <main className="min-h-screen bg-cream-50">
@@ -77,6 +157,25 @@ export default function Home() {
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(320px,2fr)_3fr] md:gap-12 lg:gap-16">
           <aside className="space-y-6 md:max-w-lg">
+            <div>
+              <ImageUpload
+                onImageSelect={(image) => {
+                  setUploadedImage(image);
+                  setUploadError(null);
+                }}
+                onImageRemove={() => {
+                  setUploadedImage(null);
+                  setUploadError(null);
+                }}
+                onError={(msg) => setUploadError(msg)}
+                uploadedImage={uploadedImage}
+                disabled={isLoading}
+              />
+              {uploadError && (
+                <p className="mt-2 text-xs text-red-500">{uploadError}</p>
+              )}
+            </div>
+
             <PromptInput
               value={prompt}
               onChange={setPrompt}
@@ -103,6 +202,7 @@ export default function Home() {
               isLoading={isLoading}
               error={error}
               onRetry={handleGenerate}
+              originalImage={originalImage}
             />
           </section>
         </div>
