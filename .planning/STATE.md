@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-02-18)
 
 **Core value:** User can generate high-quality images from text prompts or transform uploaded images -- instantly, with no friction, no signup, no clutter.
-**Current focus:** Phase 4: Visual Identity + Responsive Layout (Complete)
+**Current focus:** Phase 5: Output Actions + Power Features (Complete)
 
 ## Current Position
 
-Phase: 4 of 5 (Visual Identity + Responsive Layout)
-Plan: 4 of 4 in current phase (COMPLETE)
+Phase: 5 of 5 (Output Actions + Power Features)
+Plan: 3 of 3 in current phase (COMPLETE)
 Status: Phase Complete
-Last activity: 2026-02-18 -- Completed 04-04 (gap closure: filter-controls migration, animate-fade-in)
+Last activity: 2026-02-18 -- Completed 05-03 (gap closure: wire FullscreenViewer and ImageActions into result-display)
 
 Progress: [##########] 100%
 
@@ -46,6 +46,7 @@ Progress: [##########] 100%
 | Phase 01 P02 | 2min | 1 task | 1 file |
 | Phase 02 P03 | 1min | 1 task | 1 file |
 | Phase 01 P02 | 2min | 1 tasks | 1 files |
+| Phase 05 P03 | 2min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -91,6 +92,8 @@ Recent decisions affecting current work:
 - [Phase 01]: [01-02]: Dual response strategy: binary Response for success images, Response.json for errors
 - [04-04]: Sage-500/sage-100/sage-800 for selected pill state; sage-200/cream-100/ink-700 for unselected
 - [04-04]: animate-fade-in on image container only; crossfade img elements keep manual transition-opacity
+- [Phase 05]: Used <button> wrapper (not <div>) for click-to-fullscreen for accessibility compliance
+- [Phase 05]: ImageActions guarded on imageUrl && !isLoading to prevent stale image actions during regeneration
 
 ### Pending Todos
 
@@ -104,5 +107,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-18
-Stopped at: Completed 04-04-PLAN.md
-Resume file: .planning/phases/04-visual-identity-responsive-layout/04-04-SUMMARY.md
+Stopped at: Completed 05-03-PLAN.md
+Resume file: .planning/phases/05-output-actions-power-features/05-03-SUMMARY.md
