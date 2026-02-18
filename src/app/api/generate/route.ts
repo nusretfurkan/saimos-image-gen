@@ -172,23 +172,19 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (error) {
-    // Timeout — no fallback, return immediately
-    if (error instanceof Error && error.message === "TIMEOUT") {
-      return Response.json(
-        { error: ERROR_MESSAGES.TIMEOUT },
-        { status: 504 }
-      );
-    }
+    const isTimeout = error instanceof Error && error.message === "TIMEOUT";
+    const isServerError = isFallbackEligible(error);
 
-    // Attempt OpenAI fallback only for 429/503 + text-to-image + key present
+    // Attempt OpenAI fallback for 429/503/timeout + text-to-image + key present
     if (
-      isFallbackEligible(error) &&
+      (isServerError || isTimeout) &&
       mode === "text-to-image" &&
       process.env.OPENAI_API_KEY
     ) {
-      console.warn(
-        `Gemini returned ${(error as { status: number }).status}, falling back to OpenAI`
-      );
+      const reason = isTimeout
+        ? "timeout"
+        : `${(error as { status: number }).status}`;
+      console.warn(`Gemini failed (${reason}), falling back to OpenAI`);
 
       try {
         const result = await generateWithOpenAI(prompt, aspectRatio, resolution);
@@ -207,6 +203,14 @@ export async function POST(req: NextRequest) {
       } catch (fallbackError) {
         console.error("OpenAI fallback also failed:", fallbackError);
       }
+    }
+
+    // If we get here, fallback wasn't attempted or also failed
+    if (isTimeout) {
+      return Response.json(
+        { error: ERROR_MESSAGES.TIMEOUT },
+        { status: 504 }
+      );
     }
 
     console.error("Gemini API error:", error);

@@ -32,7 +32,7 @@ export const VALID_MIME_TYPES = [
 ] as const;
 export const MAX_IMAGE_SIZE_BYTES = 7 * 1024 * 1024; // 7 MB
 export const MAX_PROMPT_LENGTH = 10_000;
-export const GEMINI_TIMEOUT_MS = 115_000; // 115s (5s buffer before Vercel's maxDuration)
+export const GEMINI_TIMEOUT_MS = 40_000; // 40s — leave room for OpenAI fallback within Vercel's function limit
 
 export const ASPECT_RATIOS = [
   { value: "1:1", label: "1:1", widthFactor: 1, heightFactor: 1 },
