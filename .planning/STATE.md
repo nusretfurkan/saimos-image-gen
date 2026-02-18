@@ -55,6 +55,7 @@ Recent decisions affecting current work:
 - [03-01]: Used native browser APIs only (no react-dropzone) per research recommendation
 - [03-01]: Counter-based drag flicker prevention pattern established for upload component
 - [03-01]: Controlled upload component pattern: parent owns ImageUploadState
+- [Phase 03]: Used native browser APIs only (no react-dropzone) per research recommendation
 
 ### Pending Todos
 

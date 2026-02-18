@@ -110,6 +110,6 @@ Note: Phases 3, 4, and 5 all depend on Phase 2 but are independent of each other
 |-------|----------------|--------|-----------|
 | 1. Foundation + API Route | 0/3 | Not started | - |
 | 2. Text-to-Image Generation | 0/3 | Not started | - |
-| 3. Image-to-Image Editing | 0/2 | Not started | - |
+| 3. Image-to-Image Editing | 1/2 | In Progress | - |
 | 4. Visual Identity + Responsive Layout | 0/3 | Not started | - |
 | 5. Output Actions + Power Features | 0/2 | Not started | - |
