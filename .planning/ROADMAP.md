@@ -78,12 +78,12 @@ Plans:
   3. On mobile (< 768px), the layout is a single usable column with well-proportioned controls
   4. On desktop (>= 768px), the layout splits into two columns (controls left, output right)
   5. The overall look is distinctive and does not resemble a generic AI tool template
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 04-01: Design tokens, fonts, and global styles
-- [ ] 04-02: Responsive layout (single-column mobile, two-column desktop)
-- [ ] 04-03: Component visual refinement
+- [ ] 04-01-PLAN.md — Design tokens (sage green + cream + ink palette, shadows, radii, animations) and Google Fonts loading (Playfair Display + DM Sans)
+- [ ] 04-02-PLAN.md — Responsive two-column layout (single-column mobile < 768px, two-column desktop >= 768px)
+- [ ] 04-03-PLAN.md — Component visual refinement (buttons, cards, inputs, result display, mode selector, image upload)
 
 ### Phase 5: Output Actions + Power Features
 **Goal**: User has full control over generated images (view, save, copy) and can tune generation quality
