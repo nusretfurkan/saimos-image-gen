@@ -42,6 +42,8 @@ Progress: [##########] 100%
 | Phase 05 P02 | 3min | 2 tasks | 5 files |
 | Phase 02 P02 | 1min | 1 task | 2 files |
 | Phase 01 P02 | 2min | 1 task | 1 file |
+| Phase 02 P03 | 1min | 1 task | 1 file |
+| Phase 01 P02 | 2min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -77,6 +79,11 @@ Recent decisions affecting current work:
 - [05-02]: Added retry-without-thinkingConfig fallback for API compatibility edge case
 - [02-02]: Used 10px base for shape indicator scaling (compact for mobile)
 - [02-02]: Used Tailwind v4 @utility directive for scrollbar-hide (not @layer or plugin)
+- [02-03]: Used useRef for previous image tracking instead of useState to avoid extra re-renders during crossfade
+- [02-03]: Replaced lucide-react Loader2 with inline SVG spinner to eliminate external dependency
+- [02-03]: Error state rendered below image container (not replacing it) so previous result stays visible
+- [Phase 01]: [01-02]: Used Zod 4 issues[0].message (not errors[0].message) for validation error extraction
+- [Phase 01]: [01-02]: Dual response strategy: binary Response for success images, Response.json for errors
 
 ### Pending Todos
 
@@ -90,5 +97,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-18
-Stopped at: Completed 02-02-PLAN.md
-Resume file: .planning/phases/02-text-to-image-generation/02-02-SUMMARY.md
+Stopped at: Completed 02-03-PLAN.md
+Resume file: .planning/phases/02-text-to-image-generation/02-03-SUMMARY.md

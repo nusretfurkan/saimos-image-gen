@@ -21,7 +21,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Image Output
 
-- [ ] **OUT-01**: Generated image displays prominently as the hero element
+- [x] **OUT-01**: Generated image displays prominently as the hero element
 - [x] **OUT-02**: User can view generated image in fullscreen (dark overlay, contain-fit, close via X/backdrop/Escape)
 - [x] **OUT-03**: User can download generated image as `saimos-gen-{timestamp}.png`
 - [x] **OUT-04**: User can copy generated image to clipboard
@@ -37,13 +37,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### UX Quality
 
-- [ ] **UX-01**: Loading state with spinner and "Generating..." text during generation
+- [x] **UX-01**: Loading state with spinner and "Generating..." text during generation
 - [x] **UX-02**: Mobile layout is usable and well-proportioned on common phone screen sizes
 - [x] **UX-03**: Desktop layout uses two-column arrangement (controls left, output right)
 - [x] **UX-04**: Only the last generated image is held — no persistence across page refreshes
 - [x] **UX-05**: Uploaded images validated for format (JPEG/PNG/WebP) and size (≤7MB) with client-side feedback
 - [x] **UX-06**: 4K resolution option shows timeout warning for free tier
-- [ ] **UX-07**: Error states handled with inline messages and retry option
+- [x] **UX-07**: Error states handled with inline messages and retry option
 
 ### Visual Identity
 
@@ -103,7 +103,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FILT-01 | Phase 2 | Complete |
 | FILT-02 | Phase 2 | Complete |
 | FILT-03 | Phase 2 | Complete |
-| OUT-01 | Phase 2 | Pending |
+| OUT-01 | Phase 2 | Complete |
 | OUT-02 | Phase 5 | Complete |
 | OUT-03 | Phase 5 | Complete |
 | OUT-04 | Phase 5 | Complete |
@@ -113,13 +113,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INFRA-03 | Phase 1 | Pending |
 | INFRA-04 | Phase 1 | Pending |
 | INFRA-05 | Phase 1 | Pending |
-| UX-01 | Phase 2 | Pending |
+| UX-01 | Phase 2 | Complete |
 | UX-02 | Phase 4 | Complete |
 | UX-03 | Phase 4 | Complete |
 | UX-04 | Phase 2 | Complete |
 | UX-05 | Phase 3 | Complete |
 | UX-06 | Phase 2 | Complete |
-| UX-07 | Phase 2 | Pending |
+| UX-07 | Phase 2 | Complete |
 | VIS-01 | Phase 4 | Complete |
 | VIS-02 | Phase 4 | Complete |
 | VIS-03 | Phase 4 | Pending |
