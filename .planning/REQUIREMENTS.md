@@ -31,8 +31,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **INFRA-01**: All Gemini API calls go through server-side route (API key never exposed to client)
 - [x] **INFRA-02**: Input validation with specific error messages per PRD error table
-- [ ] **INFRA-03**: Content safety filter rejections show appropriate message (not generic error)
-- [ ] **INFRA-04**: Timeout handling with clear message for long-running generations
+- [x] **INFRA-03**: Content safety filter rejections show appropriate message (not generic error)
+- [x] **INFRA-04**: Timeout handling with clear message for long-running generations
 - [ ] **INFRA-05**: App is deployed and accessible on Vercel
 
 ### UX Quality
@@ -110,8 +110,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | OUT-05 | Phase 3 | Complete |
 | INFRA-01 | Phase 1 | Complete |
 | INFRA-02 | Phase 1 | Complete |
-| INFRA-03 | Phase 1 | Pending |
-| INFRA-04 | Phase 1 | Pending |
+| INFRA-03 | Phase 1 | Complete |
+| INFRA-04 | Phase 1 | Complete |
 | INFRA-05 | Phase 1 | Pending |
 | UX-01 | Phase 2 | Complete |
 | UX-02 | Phase 4 | Complete |
