@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { ThinkingLevel as GeminiThinkingLevel } from "@google/genai";
 import { ai, MODEL_ID } from "@/lib/gemini";
 import { generateRequestSchema } from "@/lib/schemas";
 import { ERROR_MESSAGES, GEMINI_TIMEOUT_MS } from "@/lib/constants";
@@ -26,8 +27,15 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { prompt, mode, aspectRatio, resolution, image, imageMimeType } =
-    parsed.data;
+  const {
+    prompt,
+    mode,
+    aspectRatio,
+    resolution,
+    thinkingLevel,
+    image,
+    imageMimeType,
+  } = parsed.data;
 
   // 3. Build Gemini request parts
   const parts: Array<
@@ -42,24 +50,64 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  // 4. Call Gemini with timeout
-  try {
+  // 4. Build Gemini config
+  const baseConfig = {
+    responseModalities: ["TEXT", "IMAGE"] as string[],
+    imageConfig: { aspectRatio, imageSize: resolution },
+  };
+
+  const thinkingConfig = {
+    thinkingLevel: thinkingLevel as GeminiThinkingLevel,
+  };
+
+  // Helper: detect if error is specifically about thinkingConfig
+  function isThinkingConfigError(err: unknown): boolean {
+    if (!(err instanceof Error)) return false;
+    const msg = err.message.toLowerCase();
+    return (
+      msg.includes("thinking") ||
+      msg.includes("thinkingconfig") ||
+      msg.includes("invalid config")
+    );
+  }
+
+  // Helper: call Gemini with timeout
+  async function callGemini(includeThinking: boolean) {
     const timeoutPromise = new Promise<never>((_, reject) => {
       setTimeout(() => reject(new Error("TIMEOUT")), GEMINI_TIMEOUT_MS);
     });
 
+    const config = includeThinking
+      ? { ...baseConfig, thinkingConfig }
+      : baseConfig;
+
     const generatePromise = ai.models.generateContent({
       model: MODEL_ID,
       contents: [{ role: "user", parts }],
-      config: {
-        responseModalities: ["TEXT", "IMAGE"],
-        imageConfig: { aspectRatio, imageSize: resolution },
-      },
+      config,
     });
 
-    const response = await Promise.race([generatePromise, timeoutPromise]);
+    return Promise.race([generatePromise, timeoutPromise]);
+  }
 
-    // 5. Safety filter detection
+  // 5. Call Gemini -- attempt with thinkingConfig, fallback without
+  try {
+    let response;
+    try {
+      response = await callGemini(true);
+    } catch (err) {
+      if (isThinkingConfigError(err)) {
+        console.warn(
+          "thinkingConfig not supported, retrying without:",
+          err instanceof Error ? err.message : err
+        );
+        response = await callGemini(false);
+      } else {
+        throw err;
+      }
+    }
+
+    // 6. Safety filter detection
     if (response.promptFeedback?.blockReason) {
       return Response.json(
         { error: ERROR_MESSAGES.SAFETY_BLOCKED },
@@ -76,7 +124,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 6. Extract image and text from response parts
+    // 7. Extract image and text from response parts
     let imageData: string | null = null;
     let mimeType = "image/png";
     let textResponse: string | null = null;
@@ -98,7 +146,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 7. Return binary image response
+    // 8. Return binary image response
     const binaryData = Buffer.from(imageData, "base64");
 
     return new Response(binaryData, {

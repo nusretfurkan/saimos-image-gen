@@ -24,6 +24,7 @@ export const generateRequestSchema = z
         error: ERROR_MESSAGES.INVALID_RESOLUTION,
       })
       .default("1K"),
+    thinkingLevel: z.enum(["LOW", "HIGH"]).optional().default("HIGH"),
     image: z.string().optional(),
     imageMimeType: z
       .enum([...VALID_MIME_TYPES], {
