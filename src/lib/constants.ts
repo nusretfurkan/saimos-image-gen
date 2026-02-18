@@ -53,3 +53,28 @@ export const RESOLUTIONS = [
 
 export type AspectRatio = (typeof ASPECT_RATIOS)[number]["value"];
 export type Resolution = (typeof RESOLUTIONS)[number]["value"];
+
+// OpenAI fallback configuration
+export const OPENAI_API_URL = "https://api.openai.com/v1/images/generations";
+export const OPENAI_MODEL = "gpt-image-1.5";
+export const OPENAI_TIMEOUT_MS = 90_000; // 90s — leave buffer within Vercel's 120s maxDuration
+
+// Map Gemini aspect ratios to OpenAI size strings
+// OpenAI gpt-image-1.5 supports: "1024x1024", "1536x1024", "1024x1536"
+export const ASPECT_RATIO_TO_OPENAI_SIZE: Record<string, string> = {
+  "1:1": "1024x1024",
+  "3:2": "1536x1024",
+  "4:3": "1536x1024",
+  "16:9": "1536x1024",
+  "21:9": "1536x1024",
+  "2:3": "1024x1536",
+  "3:4": "1024x1536",
+  "9:16": "1024x1536",
+};
+
+// Map Gemini resolution to OpenAI quality parameter
+export const RESOLUTION_TO_OPENAI_QUALITY: Record<string, string> = {
+  "1K": "medium",
+  "2K": "high",
+  "4K": "high",
+};

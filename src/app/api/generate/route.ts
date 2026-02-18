@@ -3,6 +3,7 @@ import { ThinkingLevel as GeminiThinkingLevel } from "@google/genai";
 import { getAI, MODEL_ID } from "@/lib/gemini";
 import { generateRequestSchema } from "@/lib/schemas";
 import { ERROR_MESSAGES, GEMINI_TIMEOUT_MS } from "@/lib/constants";
+import { generateWithOpenAI } from "@/lib/openai";
 
 export const maxDuration = 120;
 
@@ -59,6 +60,15 @@ export async function POST(req: NextRequest) {
   const thinkingConfig = {
     thinkingLevel: thinkingLevel as GeminiThinkingLevel,
   };
+
+  // Helper: detect if error is a Gemini 503 or 429 (eligible for OpenAI fallback)
+  function isFallbackEligible(err: unknown): boolean {
+    if (typeof err === "object" && err !== null && "status" in err) {
+      const status = (err as { status: number }).status;
+      return status === 429 || status === 503;
+    }
+    return false;
+  }
 
   // Helper: detect if error is specifically about thinkingConfig
   function isThinkingConfigError(err: unknown): boolean {
@@ -157,15 +167,46 @@ export async function POST(req: NextRequest) {
         "X-Text-Response": textResponse
           ? encodeURIComponent(textResponse)
           : "",
+        "X-Image-Provider": "gemini",
         "Cache-Control": "no-store",
       },
     });
   } catch (error) {
+    // Timeout — no fallback, return immediately
     if (error instanceof Error && error.message === "TIMEOUT") {
       return Response.json(
         { error: ERROR_MESSAGES.TIMEOUT },
         { status: 504 }
       );
+    }
+
+    // Attempt OpenAI fallback only for 429/503 + text-to-image + key present
+    if (
+      isFallbackEligible(error) &&
+      mode === "text-to-image" &&
+      process.env.OPENAI_API_KEY
+    ) {
+      console.warn(
+        `Gemini returned ${(error as { status: number }).status}, falling back to OpenAI`
+      );
+
+      try {
+        const result = await generateWithOpenAI(prompt, aspectRatio, resolution);
+        const fallbackData = Buffer.from(result.imageData, "base64");
+
+        return new Response(fallbackData, {
+          status: 200,
+          headers: {
+            "Content-Type": result.mimeType,
+            "Content-Length": fallbackData.length.toString(),
+            "X-Text-Response": "",
+            "X-Image-Provider": "openai",
+            "Cache-Control": "no-store",
+          },
+        });
+      } catch (fallbackError) {
+        console.error("OpenAI fallback also failed:", fallbackError);
+      }
     }
 
     console.error("Gemini API error:", error);
