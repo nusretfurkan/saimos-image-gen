@@ -74,6 +74,8 @@ Recent decisions affecting current work:
 - [05-02]: Default thinking level is HIGH (Quality) for best results out of the box
 - [05-02]: Used SDK ThinkingLevel enum cast to satisfy Gemini type system
 - [05-02]: Added retry-without-thinkingConfig fallback for API compatibility edge case
+- [02-02]: Used 10px base for shape indicator scaling (compact for mobile)
+- [02-02]: Used Tailwind v4 @utility directive for scrollbar-hide (not @layer or plugin)
 
 ### Pending Todos
 
@@ -87,5 +89,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-18
-Stopped at: Completed 05-02-PLAN.md
-Resume file: .planning/phases/05-output-actions-power-features/05-02-SUMMARY.md
+Stopped at: Completed 02-02-PLAN.md
+Resume file: .planning/phases/02-text-to-image-generation/02-02-SUMMARY.md
