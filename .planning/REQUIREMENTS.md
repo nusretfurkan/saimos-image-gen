@@ -11,7 +11,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **GEN-01**: User can enter a text prompt and generate an image (text-to-image)
 - [x] **GEN-02**: User can upload a reference image (JPEG/PNG/WebP, ≤7MB) and enter a text prompt to generate an edited/transformed image (image-to-image)
-- [ ] **GEN-03**: User can toggle thinking level (low/high) to trade speed for quality
+- [x] **GEN-03**: User can toggle thinking level (low/high) to trade speed for quality
 
 ### Filters
 
@@ -25,7 +25,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **OUT-02**: User can view generated image in fullscreen (dark overlay, contain-fit, close via X/backdrop/Escape)
 - [x] **OUT-03**: User can download generated image as `saimos-gen-{timestamp}.png`
 - [x] **OUT-04**: User can copy generated image to clipboard
-- [ ] **OUT-05**: User can paste image from clipboard into the upload area (image-to-image mode)
+- [x] **OUT-05**: User can paste image from clipboard into the upload area (image-to-image mode)
 
 ### Infrastructure
 
@@ -99,7 +99,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | GEN-01 | Phase 2 | Complete |
 | GEN-02 | Phase 3 | Complete |
-| GEN-03 | Phase 5 | Pending |
+| GEN-03 | Phase 5 | Complete |
 | FILT-01 | Phase 2 | Pending |
 | FILT-02 | Phase 2 | Pending |
 | FILT-03 | Phase 2 | Pending |
@@ -107,7 +107,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | OUT-02 | Phase 5 | Complete |
 | OUT-03 | Phase 5 | Complete |
 | OUT-04 | Phase 5 | Complete |
-| OUT-05 | Phase 3 | Pending |
+| OUT-05 | Phase 3 | Complete |
 | INFRA-01 | Phase 1 | Complete |
 | INFRA-02 | Phase 1 | Complete |
 | INFRA-03 | Phase 1 | Pending |
