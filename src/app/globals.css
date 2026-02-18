@@ -112,3 +112,10 @@ dialog::backdrop {
 .fullscreen-dialog[open] {
   opacity: 1;
 }
+
+@utility scrollbar-hide {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
