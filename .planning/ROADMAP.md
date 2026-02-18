@@ -47,12 +47,12 @@ Plans:
   3. User sees per-image cost indicator next to resolution options and a timeout warning when 4K is selected
   4. A spinner with "Generating..." text is visible during the entire generation wait
   5. When generation fails (safety filter, timeout, validation), an inline error message appears with a retry option
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: Prompt input and generation trigger
-- [ ] 02-02: Filter controls (aspect ratio, resolution, cost indicator)
-- [ ] 02-03: Result display and loading/error states
+- [ ] 02-01-PLAN.md -- Core generation flow: page orchestrator, prompt input, shared types/constants, fetch logic
+- [ ] 02-02-PLAN.md -- Filter controls: aspect ratio pills with shape indicators, resolution pills, cost indicator, 4K warning
+- [ ] 02-03-PLAN.md -- Result display: image hero with crossfade, loading overlay with spinner, inline error with retry
 
 ### Phase 3: Image-to-Image Editing
 **Goal**: User can upload or paste a reference image and transform it using a text prompt
