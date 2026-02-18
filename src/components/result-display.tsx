@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FullscreenViewer } from "@/components/fullscreen-viewer";
+import { ImageActions } from "@/components/image-actions";
 
 interface ResultDisplayProps {
   imageUrl: string | null;
@@ -46,6 +48,7 @@ export function ResultDisplay({
 }: ResultDisplayProps) {
   const previousImageRef = useRef<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // When imageUrl changes, reset loaded state so the new image can fade in
   const currentImageRef = useRef<string | null>(null);
@@ -139,14 +142,21 @@ export function ResultDisplay({
 
           {/* Current image */}
           {imageUrl && (
-            <img
-              src={imageUrl}
-              alt="Generated image"
-              className={`w-full h-auto object-contain transition-opacity duration-500 ease-soft ${
-                imageLoaded ? "opacity-100" : "opacity-0"
-              }`}
-              onLoad={handleImageLoad}
-            />
+            <button
+              type="button"
+              onClick={() => setIsFullscreen(true)}
+              className="w-full cursor-zoom-in"
+              aria-label="View fullscreen"
+            >
+              <img
+                src={imageUrl}
+                alt="Generated image"
+                className={`w-full h-auto object-contain transition-opacity duration-500 ease-soft ${
+                  imageLoaded ? "opacity-100" : "opacity-0"
+                }`}
+                onLoad={handleImageLoad}
+              />
+            </button>
           )}
 
           {/* Loading overlay (spinner on top of previous image during regeneration) */}
@@ -163,6 +173,11 @@ export function ResultDisplay({
         </div>
       )}
 
+      {/* Image actions (download + copy) */}
+      {imageUrl && !isLoading && (
+        <ImageActions imageUrl={imageUrl} />
+      )}
+
       {/* Error state (below the image container, not replacing it) */}
       {error && (
         <div className="flex items-center gap-3 rounded-xl border border-error/20 bg-error-bg px-4 py-3 text-sm text-error font-body">
@@ -175,6 +190,14 @@ export function ResultDisplay({
             Try Again
           </Button>
         </div>
+      )}
+      {/* Fullscreen viewer dialog */}
+      {imageUrl && (
+        <FullscreenViewer
+          imageUrl={imageUrl}
+          isOpen={isFullscreen}
+          onClose={() => setIsFullscreen(false)}
+        />
       )}
     </div>
   );
