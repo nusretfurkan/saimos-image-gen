@@ -30,12 +30,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. A prompt that triggers Gemini's safety filter returns a clear "try rephrasing" message (not a success or generic error)
   4. The API key is not present in any client-side JavaScript bundle after build
   5. The app is accessible at a public Vercel URL
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Project scaffold and configuration
-- [ ] 01-02: Gemini API route with validation and error handling
-- [ ] 01-03: Vercel deployment and production verification
+- [ ] 01-01-PLAN.md -- Project scaffold with Next.js 16, dependencies, and shared library modules (gemini client, Zod schemas, constants, types, utils)
+- [ ] 01-02-PLAN.md -- Gemini API route handler with Zod validation, safety filter detection, timeout handling, and binary image response
+- [ ] 01-03-PLAN.md -- Vercel deployment, environment configuration, and production verification of all success criteria
 
 ### Phase 2: Text-to-Image Generation
 **Goal**: User can type a prompt, select filters, and see a generated image displayed as the hero element
@@ -94,12 +94,11 @@ Plans:
   2. User can download the generated image as a PNG file named `saimos-gen-{timestamp}.png`
   3. User can copy the generated image to clipboard with a single click
   4. User can toggle thinking level between low and high, and the generation reflects the chosen quality/speed tradeoff
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 05-01: Fullscreen image viewer
-- [ ] 05-02: Download and copy-to-clipboard actions
-- [ ] 05-03: Thinking level toggle
+- [ ] 05-01-PLAN.md -- Fullscreen image viewer, download, and copy-to-clipboard actions
+- [ ] 05-02-PLAN.md -- Thinking level toggle with API integration
 
 ## Progress
 
@@ -113,4 +112,4 @@ Note: Phases 3, 4, and 5 all depend on Phase 2 but are independent of each other
 | 2. Text-to-Image Generation | 0/3 | Not started | - |
 | 3. Image-to-Image Editing | 0/2 | Not started | - |
 | 4. Visual Identity + Responsive Layout | 0/3 | Not started | - |
-| 5. Output Actions + Power Features | 0/3 | Not started | - |
+| 5. Output Actions + Power Features | 0/2 | Not started | - |
