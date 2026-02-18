@@ -10,30 +10,31 @@ See: .planning/PROJECT.md (updated 2026-02-18)
 ## Current Position
 
 Phase: 4 of 5 (Visual Identity + Responsive Layout)
-Plan: 3 of 3 in current phase (COMPLETE)
+Plan: 4 of 4 in current phase (COMPLETE)
 Status: Phase Complete
-Last activity: 2026-02-18 -- Completed 04-03 (component visual refinement)
+Last activity: 2026-02-18 -- Completed 04-04 (gap closure: filter-controls migration, animate-fade-in)
 
 Progress: [##########] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
+- Total plans completed: 4
 - Average duration: 2min
-- Total execution time: 0.09 hours
+- Total execution time: 0.11 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 4 - Visual Identity | 3 | 7min | 2min |
+| 4 - Visual Identity | 4 | 8min | 2min |
 
 **Recent Trend:**
-- Last 5 plans: 04-03 (3min), 04-02 (1min), 04-01 (3min)
+- Last 5 plans: 04-04 (1min), 04-03 (3min), 04-02 (1min), 04-01 (3min)
 - Trend: --
 
 *Updated after each plan completion*
+| Phase 04 P04 | 1min | 2 tasks | 2 files |
 | Phase 04 P03 | 3min | 3 tasks | 8 files |
 | Phase 05 P01 | 4min | 2 tasks | 5 files |
 | Phase 03 P01 | 6min | 2 tasks | 3 files |
@@ -88,6 +89,8 @@ Recent decisions affecting current work:
 - [02-03]: Error state rendered below image container (not replacing it) so previous result stays visible
 - [Phase 01]: [01-02]: Used Zod 4 issues[0].message (not errors[0].message) for validation error extraction
 - [Phase 01]: [01-02]: Dual response strategy: binary Response for success images, Response.json for errors
+- [04-04]: Sage-500/sage-100/sage-800 for selected pill state; sage-200/cream-100/ink-700 for unselected
+- [04-04]: animate-fade-in on image container only; crossfade img elements keep manual transition-opacity
 
 ### Pending Todos
 
@@ -101,5 +104,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-18
-Stopped at: Completed 04-03-PLAN.md
-Resume file: .planning/phases/04-visual-identity-responsive-layout/04-03-SUMMARY.md
+Stopped at: Completed 04-04-PLAN.md
+Resume file: .planning/phases/04-visual-identity-responsive-layout/04-04-SUMMARY.md
