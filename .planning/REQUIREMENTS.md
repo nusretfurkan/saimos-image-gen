@@ -15,9 +15,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Filters
 
-- [ ] **FILT-01**: User can select aspect ratio from 8 options (1:1, 3:2, 2:3, 4:3, 3:4, 16:9, 9:16, 21:9)
-- [ ] **FILT-02**: User can select resolution (1K, 2K, 4K)
-- [ ] **FILT-03**: User can see per-image cost indicator next to resolution options
+- [x] **FILT-01**: User can select aspect ratio from 8 options (1:1, 3:2, 2:3, 4:3, 3:4, 16:9, 9:16, 21:9)
+- [x] **FILT-02**: User can select resolution (1K, 2K, 4K)
+- [x] **FILT-03**: User can see per-image cost indicator next to resolution options
 
 ### Image Output
 
@@ -42,7 +42,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **UX-03**: Desktop layout uses two-column arrangement (controls left, output right)
 - [x] **UX-04**: Only the last generated image is held — no persistence across page refreshes
 - [x] **UX-05**: Uploaded images validated for format (JPEG/PNG/WebP) and size (≤7MB) with client-side feedback
-- [ ] **UX-06**: 4K resolution option shows timeout warning for free tier
+- [x] **UX-06**: 4K resolution option shows timeout warning for free tier
 - [ ] **UX-07**: Error states handled with inline messages and retry option
 
 ### Visual Identity
@@ -100,9 +100,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GEN-01 | Phase 2 | Complete |
 | GEN-02 | Phase 3 | Complete |
 | GEN-03 | Phase 5 | Complete |
-| FILT-01 | Phase 2 | Pending |
-| FILT-02 | Phase 2 | Pending |
-| FILT-03 | Phase 2 | Pending |
+| FILT-01 | Phase 2 | Complete |
+| FILT-02 | Phase 2 | Complete |
+| FILT-03 | Phase 2 | Complete |
 | OUT-01 | Phase 2 | Pending |
 | OUT-02 | Phase 5 | Complete |
 | OUT-03 | Phase 5 | Complete |
@@ -118,7 +118,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UX-03 | Phase 4 | Complete |
 | UX-04 | Phase 2 | Complete |
 | UX-05 | Phase 3 | Complete |
-| UX-06 | Phase 2 | Pending |
+| UX-06 | Phase 2 | Complete |
 | UX-07 | Phase 2 | Pending |
 | VIS-01 | Phase 4 | Complete |
 | VIS-02 | Phase 4 | Complete |
