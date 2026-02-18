@@ -95,11 +95,12 @@ Plans:
   2. User can download the generated image as a PNG file named `saimos-gen-{timestamp}.png`
   3. User can copy the generated image to clipboard with a single click
   4. User can toggle thinking level between low and high, and the generation reflects the chosen quality/speed tradeoff
-**Plans**: 2 plans
+**Plans**: 3 plans
 
 Plans:
 - [ ] 05-01-PLAN.md -- Fullscreen image viewer, download, and copy-to-clipboard actions
 - [ ] 05-02-PLAN.md -- Thinking level toggle with API integration
+- [ ] 05-03-PLAN.md -- Gap closure: wire orphaned FullscreenViewer and ImageActions into result-display.tsx
 
 ## Progress
 
