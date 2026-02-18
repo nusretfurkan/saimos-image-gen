@@ -3,13 +3,16 @@
 import { useState, useCallback, useRef } from "react";
 import { PromptInput } from "@/components/prompt-input";
 import { FilterControls } from "@/components/filter-controls";
+import { ThinkingToggle } from "@/components/thinking-toggle";
 import { ResultDisplay } from "@/components/result-display";
 import type { AspectRatio, Resolution } from "@/lib/constants";
+import type { ThinkingLevel } from "@/lib/types";
 
 export default function Home() {
   const [prompt, setPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState<AspectRatio>("1:1");
   const [resolution, setResolution] = useState<Resolution>("1K");
+  const [thinkingLevel, setThinkingLevel] = useState<ThinkingLevel>("HIGH");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,6 +35,7 @@ export default function Home() {
           prompt,
           aspectRatio,
           resolution,
+          thinkingLevel,
           mode: "text-to-image",
         }),
         signal: controller.signal,
@@ -57,7 +61,7 @@ export default function Home() {
     } finally {
       setIsLoading(false);
     }
-  }, [prompt, aspectRatio, resolution, imageUrl]);
+  }, [prompt, aspectRatio, resolution, thinkingLevel, imageUrl]);
 
   return (
     <main className="min-h-screen bg-cream-50">
@@ -85,6 +89,11 @@ export default function Home() {
               onAspectRatioChange={setAspectRatio}
               resolution={resolution}
               onResolutionChange={setResolution}
+            />
+
+            <ThinkingToggle
+              level={thinkingLevel}
+              onChange={setThinkingLevel}
             />
           </aside>
 

@@ -1,8 +1,11 @@
+export type ThinkingLevel = "LOW" | "HIGH";
+
 export interface GenerateRequest {
   prompt: string;
   aspectRatio: string;
   resolution: string;
   mode: "text-to-image";
+  thinkingLevel?: ThinkingLevel;
 }
 
 export interface ErrorResponse {
