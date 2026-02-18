@@ -12,7 +12,7 @@ Deliver a personal, zero-persistence image generation tool wrapping Google Gemin
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation + API Route** - Project scaffold and secure Gemini proxy deployed to Vercel
+- [x] **Phase 1: Foundation + API Route** - Project scaffold and secure Gemini proxy deployed to Vercel (completed 2026-02-18)
 - [ ] **Phase 2: Text-to-Image Generation** - Core generation loop with filters, output display, and error handling
 - [x] **Phase 3: Image-to-Image Editing** - Upload reference images and transform them with text prompts (completed 2026-02-18)
 - [ ] **Phase 4: Visual Identity + Responsive Layout** - Distinctive design system and mobile/desktop layouts
@@ -108,7 +108,7 @@ Note: Phases 3, 4, and 5 all depend on Phase 2 but are independent of each other
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation + API Route | 0/3 | Not started | - |
+| 1. Foundation + API Route | 0/3 | Complete    | 2026-02-18 |
 | 2. Text-to-Image Generation | 0/3 | Not started | - |
 | 3. Image-to-Image Editing | 1/2 | Complete    | 2026-02-18 |
 | 4. Visual Identity + Responsive Layout | 0/3 | Not started | - |
