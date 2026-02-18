@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { ThinkingLevel as GeminiThinkingLevel } from "@google/genai";
-import { ai, MODEL_ID } from "@/lib/gemini";
+import { getAI, MODEL_ID } from "@/lib/gemini";
 import { generateRequestSchema } from "@/lib/schemas";
 import { ERROR_MESSAGES, GEMINI_TIMEOUT_MS } from "@/lib/constants";
 
@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
       ? { ...baseConfig, thinkingConfig }
       : baseConfig;
 
-    const generatePromise = ai.models.generateContent({
+    const generatePromise = getAI().models.generateContent({
       model: MODEL_ID,
       contents: [{ role: "user", parts }],
       config,
