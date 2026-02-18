@@ -1,6 +1,7 @@
 "use client";
 
 import TextareaAutosize from "react-textarea-autosize";
+import { Button } from "@/components/ui/button";
 
 interface PromptInputProps {
   value: string;
@@ -26,7 +27,10 @@ export function PromptInput({
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="space-y-2">
+      <label className="font-heading text-lg font-semibold text-ink-900">
+        Prompt
+      </label>
       <TextareaAutosize
         minRows={2}
         maxRows={6}
@@ -34,21 +38,26 @@ export function PromptInput({
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Describe the image you want to create..."
-        className="w-full resize-none rounded-xl border border-gray-200
-          px-4 py-3 text-base placeholder:text-gray-400
-          focus:outline-none focus:ring-2 focus:ring-green-500/30
-          focus:border-green-500 transition-colors"
+        className="w-full resize-none rounded-md px-4 py-3
+          font-body text-base text-ink-900 placeholder:text-ink-500
+          bg-cream-200 border border-sage-200/50
+          focus:border-sage-400 focus:outline-none focus:ring-2 focus:ring-sage-500/20
+          transition-all duration-200 ease-soft
+          motion-reduce:transition-none
+          min-h-[44px]"
       />
-      <button
+      <p className="text-xs text-ink-500">
+        {value.length > 0
+          ? `${value.length} characters`
+          : "Press Cmd+Enter to generate"}
+      </p>
+      <Button
         onClick={onSubmit}
         disabled={!canSubmit}
-        className="w-full rounded-xl bg-green-600 px-6 py-3 text-white
-          font-medium transition-all
-          hover:bg-green-700 active:scale-[0.98]
-          disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full"
       >
         {isLoading ? "Generating..." : "Generate"}
-      </button>
+      </Button>
     </div>
   );
 }

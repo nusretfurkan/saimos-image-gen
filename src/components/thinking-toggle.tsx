@@ -16,8 +16,8 @@ const OPTIONS: { value: ThinkingLevel; label: string; hint: string }[] = [
 export function ThinkingToggle({ level, onChange }: ThinkingToggleProps) {
   return (
     <div className="space-y-2">
-      <span className="text-sm font-medium text-ink-700">Quality</span>
-      <div className="inline-flex rounded-lg border border-ink-200 bg-cream-100 p-0.5">
+      <span className="font-heading text-lg font-semibold text-ink-900">Quality</span>
+      <div className="inline-flex rounded-lg border border-sage-200/40 bg-cream-100 p-0.5">
         {OPTIONS.map((option) => {
           const isActive = level === option.value;
           return (
@@ -26,10 +26,12 @@ export function ThinkingToggle({ level, onChange }: ThinkingToggleProps) {
               type="button"
               onClick={() => onChange(option.value)}
               className={cn(
-                "relative flex min-h-[44px] items-center gap-1.5 rounded-md px-4 py-2 text-sm font-medium transition-all",
+                "relative flex min-h-[44px] items-center gap-1.5 rounded-md px-4 py-2",
+                "text-sm font-medium font-body",
+                "transition-all duration-200 ease-soft motion-reduce:transition-none",
                 isActive
-                  ? "bg-sage-600 text-cream-50 shadow-sm"
-                  : "text-ink-500 hover:text-ink-700"
+                  ? "bg-sage-500 text-white shadow-sm"
+                  : "bg-cream-100 text-ink-700 hover:bg-cream-200"
               )}
               aria-pressed={isActive}
             >

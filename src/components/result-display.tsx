@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { ImageIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ResultDisplayProps {
   imageUrl: string | null;
@@ -13,7 +15,7 @@ interface ResultDisplayProps {
 function Spinner() {
   return (
     <svg
-      className="animate-spin h-6 w-6 text-white"
+      className="animate-spin h-6 w-6 text-sage-500"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -82,9 +84,16 @@ export function ResultDisplay({
   // Determine if we have any image to show (current or previous)
   const hasAnyImage = imageUrl !== null || previousImageRef.current !== null;
 
-  // --- State 1: Nothing generated yet ---
+  // --- State 1: Nothing generated yet (warm empty state) ---
   if (!imageUrl && !isLoading && !error) {
-    return null;
+    return (
+      <div className="flex min-h-[300px] md:min-h-[400px] flex-col items-center justify-center gap-3 rounded-xl bg-cream-100 shadow-card">
+        <ImageIcon className="h-10 w-10 text-sage-300" strokeWidth={1.5} />
+        <p className="text-sm text-ink-500 font-body">
+          Your creation will appear here
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -92,37 +101,37 @@ export function ResultDisplay({
       {/* Before/after: show original thumbnail when in image-to-image mode */}
       {originalImage && imageUrl && (
         <div>
-          <p className="mb-1 text-xs text-ink-400">Original</p>
+          <p className="mb-1 text-xs text-ink-500 font-body">Original</p>
           <img
             src={originalImage}
             alt="Original reference image"
-            className="h-auto w-32 rounded-md border border-sage-200 object-contain"
+            className="h-auto w-32 rounded-md shadow-card border border-sage-200/40 object-contain"
           />
         </div>
       )}
 
       {/* --- State 3: First-time loading (no image yet) --- */}
       {!hasAnyImage && isLoading && (
-        <div className="flex items-center justify-center py-24">
+        <div className="flex min-h-[300px] md:min-h-[400px] items-center justify-center rounded-xl bg-cream-100 shadow-card">
           <div className="flex flex-col items-center gap-3">
             <Spinner />
-            <span className="text-sm font-medium text-ink-500">
+            <span className="text-sm font-medium text-ink-500 font-body">
               Generating...
             </span>
           </div>
         </div>
       )}
 
-      {/* --- State 2: Has image (and possibly loading overlay) --- */}
+      {/* --- State 2: Has image (hero element -- minimal chrome, image IS the design) --- */}
       {hasAnyImage && (
-        <div className="relative overflow-hidden rounded-xl">
+        <div className="relative overflow-hidden rounded-xl bg-cream-100 shadow-card transition-shadow duration-200 ease-soft hover:shadow-elevated">
           {/* Previous image for crossfade during regeneration */}
           {previousImageRef.current &&
             previousImageRef.current !== imageUrl && (
               <img
                 src={previousImageRef.current}
                 alt=""
-                className={`absolute inset-0 w-full h-auto transition-opacity duration-500 ${
+                className={`absolute inset-0 w-full h-auto transition-opacity duration-500 ease-soft ${
                   imageLoaded ? "opacity-0" : "opacity-100"
                 }`}
               />
@@ -133,7 +142,7 @@ export function ResultDisplay({
             <img
               src={imageUrl}
               alt="Generated image"
-              className={`w-full h-auto transition-opacity duration-500 ${
+              className={`w-full h-auto object-contain transition-opacity duration-500 ease-soft ${
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               onLoad={handleImageLoad}
@@ -142,10 +151,10 @@ export function ResultDisplay({
 
           {/* Loading overlay (spinner on top of previous image during regeneration) */}
           {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm rounded-xl">
+            <div className="absolute inset-0 flex items-center justify-center bg-ink-900/30 backdrop-blur-sm rounded-xl">
               <div className="flex flex-col items-center gap-3">
                 <Spinner />
-                <span className="text-white text-sm font-medium">
+                <span className="text-cream-50 text-sm font-medium font-body">
                   Generating...
                 </span>
               </div>
@@ -156,15 +165,15 @@ export function ResultDisplay({
 
       {/* Error state (below the image container, not replacing it) */}
       {error && (
-        <div className="flex items-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="flex items-center gap-3 rounded-xl border border-error/20 bg-error-bg px-4 py-3 text-sm text-error font-body">
           <span className="flex-1">{error}</span>
-          <button
-            type="button"
+          <Button
+            variant="outline"
             onClick={onRetry}
-            className="shrink-0 rounded-lg bg-red-100 px-3 py-1 text-red-700 font-medium hover:bg-red-200 transition-colors"
+            className="shrink-0 border-error/30 text-error hover:bg-error-bg min-h-[36px] px-3 py-1"
           >
             Try Again
-          </button>
+          </Button>
         </div>
       )}
     </div>

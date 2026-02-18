@@ -151,13 +151,13 @@ export function ImageUpload({
     return (
       <div
         className={`
-          relative rounded-lg border-2 border-dashed p-6
-          flex flex-col items-center justify-center gap-2
-          transition-colors duration-150
+          relative rounded-lg border-2 border-dashed p-8
+          flex flex-col items-center justify-center gap-2 min-h-[120px]
+          transition-all duration-200 ease-soft motion-reduce:transition-none
           ${
             isDragActive
-              ? "border-solid border-gray-400 bg-gray-50"
-              : "border-gray-300"
+              ? "border-sage-500 bg-sage-50/50"
+              : "border-sage-300/60 bg-cream-100"
           }
           ${disabled ? "opacity-50 pointer-events-none" : "cursor-pointer"}
         `}
@@ -185,10 +185,12 @@ export function ImageUpload({
           disabled={disabled}
         />
 
-        <ImagePlus className="h-8 w-8 text-gray-400" strokeWidth={1.5} />
+        <ImagePlus className="h-8 w-8 text-ink-500" strokeWidth={1.5} />
 
-        <p className="text-sm text-gray-600">Drop image, paste, or click</p>
-        <p className="text-xs text-gray-400">
+        <p className="text-sm text-ink-700 font-body">
+          Drop image, paste, or <span className="text-sage-600 font-medium">browse</span>
+        </p>
+        <p className="text-xs text-ink-500">
           JPEG, PNG, WebP &mdash; up to 7 MB
         </p>
       </div>
@@ -200,7 +202,7 @@ export function ImageUpload({
   return (
     <div
       className={`
-        flex items-center gap-3 rounded-lg border border-gray-200 p-2
+        flex items-center gap-3 rounded-lg border border-sage-200/40 bg-cream-100 p-2 shadow-card
         ${disabled ? "opacity-50 pointer-events-none" : ""}
       `}
     >
@@ -208,15 +210,15 @@ export function ImageUpload({
       <img
         src={uploadedImage.dataUrl}
         alt={uploadedImage.fileName}
-        className="h-12 w-12 rounded object-cover flex-shrink-0"
+        className="h-12 w-12 rounded-md shadow-card object-cover flex-shrink-0"
       />
 
       {/* File info */}
       <div className="min-w-0 flex-1">
-        <p className="text-sm text-gray-700 truncate">
+        <p className="text-sm text-ink-700 font-body truncate">
           {uploadedImage.fileName}
         </p>
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-ink-500">
           {formatFileSize(uploadedImage.fileSize)}
         </p>
       </div>
@@ -228,7 +230,7 @@ export function ImageUpload({
           e.stopPropagation();
           onImageRemove();
         }}
-        className="flex-shrink-0 rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors"
+        className="flex-shrink-0 rounded-md p-1.5 text-ink-500 hover:bg-sage-50 hover:text-ink-700 transition-colors duration-200 ease-soft min-h-[44px] min-w-[44px] flex items-center justify-center"
         aria-label="Remove uploaded image"
         disabled={disabled}
       >

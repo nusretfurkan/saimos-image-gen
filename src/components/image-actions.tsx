@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Download, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import {
   downloadImage,
   copyImageToClipboard,
@@ -40,22 +41,16 @@ export function ImageActions({ imageUrl }: ImageActionsProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <button
-        onClick={handleDownload}
-        className="inline-flex items-center gap-2 rounded-md bg-sage-500 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sage-600 active:bg-sage-700"
-      >
+      <Button onClick={handleDownload} className="gap-2">
         <Download size={16} />
         Download
-      </button>
+      </Button>
 
       {clipboardSupported && (
-        <button
-          onClick={handleCopy}
-          className="inline-flex items-center gap-2 rounded-md border border-sage-200 bg-cream-100 px-4 py-2.5 text-sm font-medium text-ink-900 transition-colors hover:bg-cream-200 active:bg-sage-100"
-        >
+        <Button variant="outline" onClick={handleCopy} className="gap-2">
           {copied ? <Check size={16} /> : <Copy size={16} />}
           {copied ? "Copied" : "Copy"}
-        </button>
+        </Button>
       )}
     </div>
   );
