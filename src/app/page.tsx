@@ -3,7 +3,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { PromptInput } from "@/components/prompt-input";
 import { FilterControls } from "@/components/filter-controls";
-import { ThinkingToggle } from "@/components/thinking-toggle";
 import { ImageUpload } from "@/components/image-upload";
 import { ResultDisplay } from "@/components/result-display";
 import {
@@ -12,13 +11,12 @@ import {
   readFileAsDataUrl,
 } from "@/lib/image-utils";
 import type { AspectRatio, Resolution } from "@/lib/constants";
-import type { ThinkingLevel, ImageUploadState } from "@/lib/types";
+import type { ImageUploadState } from "@/lib/types";
 
 export default function Home() {
   const [prompt, setPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState<AspectRatio>("1:1");
   const [resolution, setResolution] = useState<Resolution>("1K");
-  const [thinkingLevel, setThinkingLevel] = useState<ThinkingLevel>("HIGH");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -104,7 +102,6 @@ export default function Home() {
         prompt,
         aspectRatio,
         resolution,
-        thinkingLevel,
         mode: isImageToImage ? "image-to-image" : "text-to-image",
       };
 
@@ -129,8 +126,6 @@ export default function Home() {
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
 
-      // Revoke previous URL to free memory
-      if (imageUrl) URL.revokeObjectURL(imageUrl);
       setImageUrl(url);
     } catch (err) {
       if (err instanceof Error && err.name === "AbortError") return;
@@ -141,7 +136,7 @@ export default function Home() {
     } finally {
       setIsLoading(false);
     }
-  }, [prompt, aspectRatio, resolution, thinkingLevel, imageUrl, isImageToImage, uploadedImage]);
+  }, [prompt, aspectRatio, resolution, isImageToImage, uploadedImage]);
 
   return (
     <main className="min-h-screen bg-cream-50">
@@ -183,17 +178,14 @@ export default function Home() {
               isLoading={isLoading}
             />
 
-            <FilterControls
-              aspectRatio={aspectRatio}
-              onAspectRatioChange={setAspectRatio}
-              resolution={resolution}
-              onResolutionChange={setResolution}
-            />
-
-            <ThinkingToggle
-              level={thinkingLevel}
-              onChange={setThinkingLevel}
-            />
+            {!isImageToImage && (
+              <FilterControls
+                aspectRatio={aspectRatio}
+                onAspectRatioChange={setAspectRatio}
+                resolution={resolution}
+                onResolutionChange={setResolution}
+              />
+            )}
           </aside>
 
           <section className="md:sticky md:top-8 md:self-start">

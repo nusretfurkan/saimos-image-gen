@@ -1,9 +1,8 @@
 import { NextRequest } from "next/server";
-import { ThinkingLevel as GeminiThinkingLevel } from "@google/genai";
 import { getAI, MODEL_ID } from "@/lib/gemini";
 import { generateRequestSchema } from "@/lib/schemas";
 import { ERROR_MESSAGES, GEMINI_TIMEOUT_MS } from "@/lib/constants";
-import { generateWithOpenAI } from "@/lib/openai";
+import { generateWithOpenAI, editWithOpenAI } from "@/lib/openai";
 
 export const maxDuration = 120;
 
@@ -33,7 +32,6 @@ export async function POST(req: NextRequest) {
     mode,
     aspectRatio,
     resolution,
-    thinkingLevel,
     image,
     imageMimeType,
   } = parsed.data;
@@ -52,16 +50,17 @@ export async function POST(req: NextRequest) {
   }
 
   // 4. Build Gemini config
-  const baseConfig = {
-    responseModalities: ["TEXT", "IMAGE"] as string[],
-    imageConfig: { aspectRatio, imageSize: resolution },
+  const baseConfig: Record<string, unknown> = {
+    responseModalities: ["TEXT", "IMAGE"],
   };
 
-  const thinkingConfig = {
-    thinkingLevel: thinkingLevel as GeminiThinkingLevel,
-  };
+  // imageConfig (aspectRatio / imageSize) only applies to text-to-image.
+  // For image-to-image, output dimensions come from the input image.
+  if (mode === "text-to-image") {
+    baseConfig.imageConfig = { aspectRatio, imageSize: resolution };
+  }
 
-  // Helper: detect if error is a Gemini 503 or 429 (eligible for OpenAI fallback)
+  // Helper: detect if error is a Gemini 503 or 429 (eligible for retry/fallback)
   function isFallbackEligible(err: unknown): boolean {
     if (typeof err === "object" && err !== null && "status" in err) {
       const status = (err as { status: number }).status;
@@ -70,48 +69,31 @@ export async function POST(req: NextRequest) {
     return false;
   }
 
-  // Helper: detect if error is specifically about thinkingConfig
-  function isThinkingConfigError(err: unknown): boolean {
-    if (!(err instanceof Error)) return false;
-    const msg = err.message.toLowerCase();
-    return (
-      msg.includes("thinking") ||
-      msg.includes("thinkingconfig") ||
-      msg.includes("invalid config")
-    );
-  }
-
   // Helper: call Gemini with timeout
-  async function callGemini(includeThinking: boolean) {
+  async function callGemini() {
     const timeoutPromise = new Promise<never>((_, reject) => {
       setTimeout(() => reject(new Error("TIMEOUT")), GEMINI_TIMEOUT_MS);
     });
 
-    const config = includeThinking
-      ? { ...baseConfig, thinkingConfig }
-      : baseConfig;
-
     const generatePromise = getAI().models.generateContent({
       model: MODEL_ID,
       contents: [{ role: "user", parts }],
-      config,
+      config: baseConfig,
     });
 
     return Promise.race([generatePromise, timeoutPromise]);
   }
 
-  // 5. Call Gemini -- attempt with thinkingConfig, fallback without
+  // 5. Call Gemini with a single retry on 503/429
   try {
     let response;
     try {
-      response = await callGemini(true);
+      response = await callGemini();
     } catch (err) {
-      if (isThinkingConfigError(err)) {
-        console.warn(
-          "thinkingConfig not supported, retrying without:",
-          err instanceof Error ? err.message : err
-        );
-        response = await callGemini(false);
+      if (isFallbackEligible(err)) {
+        // Retry once after a brief delay for transient overload
+        await new Promise((r) => setTimeout(r, 2000));
+        response = await callGemini();
       } else {
         throw err;
       }
@@ -175,19 +157,24 @@ export async function POST(req: NextRequest) {
     const isTimeout = error instanceof Error && error.message === "TIMEOUT";
     const isServerError = isFallbackEligible(error);
 
-    // Attempt OpenAI fallback for 429/503/timeout + text-to-image + key present
-    if (
-      (isServerError || isTimeout) &&
-      mode === "text-to-image" &&
-      process.env.OPENAI_API_KEY
-    ) {
+    // Attempt OpenAI fallback for 429/503/timeout when API key is present
+    if ((isServerError || isTimeout) && process.env.OPENAI_API_KEY) {
       const reason = isTimeout
         ? "timeout"
         : `${(error as { status: number }).status}`;
       console.warn(`Gemini failed (${reason}), falling back to OpenAI`);
 
       try {
-        const result = await generateWithOpenAI(prompt, aspectRatio, resolution);
+        let result;
+        if (mode === "image-to-image" && image && imageMimeType) {
+          const base64Data = image.includes(",")
+            ? image.split(",")[1]
+            : image;
+          result = await editWithOpenAI(prompt, base64Data, imageMimeType);
+        } else {
+          result = await generateWithOpenAI(prompt, aspectRatio, resolution);
+        }
+
         const fallbackData = Buffer.from(result.imageData, "base64");
 
         return new Response(fallbackData, {
