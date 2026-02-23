@@ -4,7 +4,7 @@ import { generateRequestSchema } from "@/lib/schemas";
 import { ERROR_MESSAGES, GEMINI_TIMEOUT_MS } from "@/lib/constants";
 import { generateWithOpenAI, editWithOpenAI } from "@/lib/openai";
 
-export const maxDuration = 120;
+export const maxDuration = 240;
 
 export async function POST(req: NextRequest) {
   // 1. Parse request body
